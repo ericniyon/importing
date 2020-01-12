@@ -172,12 +172,13 @@ def export (request):
 
 ################################# importing data ####################################################
 def simple_upload(request):
+    import tablib
     if request.method == 'POST':
         umuryango_resource = UmuryangoResource()
         dataset = Dataset()
         new_umuryangos = request.FILES['file']
 
-        imported_data = dataset.load(new_umuryangos.read().decode("utf-8"),format='csv')
+        imported_data = dataset.load(new_umuryangos.read())
         result = umuryango_resource.import_data(dataset, dry_run=True)
         
         if not result.has_errors():
